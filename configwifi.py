@@ -13,11 +13,15 @@ def create_wpa_supplicant(ssid, wifi_key):
     temp_conf_file.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n')
     temp_conf_file.write('update_config=1\n')
     temp_conf_file.write('\n')
-    
-    # change to a new wifi
+
+    # change to a new wifi (PAWS-Secure) in our campus 
+    # ssid is actually the user name
     temp_conf_file.write('network={\n')
-    temp_conf_file.write('	ssid="' + ssid + '"\n')
-    # ssid is user's name
+    temp_conf_file.write('	ssid="PAWS-Secure"\n')
+    temp_conf_file.write('eap=PEAP\n')
+    temp_conf_file.write('key_mgmt=WPA-EAP\n')
+    temp_conf_file.write('phase2="auth=MSCHAPV2"\n')
+    temp_conf_file.write('	identity="' + ssid + '"\n')
     if wifi_key == '':
         temp_conf_file.write('	key_mgmt=NONE\n')
     else:
@@ -25,7 +29,7 @@ def create_wpa_supplicant(ssid, wifi_key):
         temp_conf_file.write('	priority=2\n')
     temp_conf_file.write('	}\n\n')
 
-    # use "sensorweb" as back up wifi
+    # use "sensorweb" as a back up wifi
     temp_conf_file.write('network={\n')
     temp_conf_file.write('	ssid="sensorweb"\n')
     temp_conf_file.write('	psk="sensorweb128"\n')

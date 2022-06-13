@@ -114,10 +114,10 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'device.php');
                     <div class="text-center" style="margin:20px; padding: 10px 0 10px 0; background-color:#FAFAFA; border-radius: 3px;">
                         <form action="submitWifi.php" style="margin:10px; padding: 5px 0 5px 0; background-color:#FAFAFA; border-radius: 3px;" method=post onsubmit='return myConfirmation(this);'>
                             <ul>
-                                <label for="ssid">Wifi name:</label>
+                                <label for="ssid">Wifi name (user name):</label>
                                 <li><input type="text" name="ssid" style="margin:5px; padding: 5px 0 5px 0; font-size: 70%; font-weight: bolder;", class="wifiNetworkInputs"></li>
 
-                                <label for="wifi_key">Wifi password:</label>
+                                <label for="wifi_key">Wifi password (user password):</label>
                                 <li><input type="text" name="wifi_key" style="margin:5px; padding: 5px 0 5px 0; font-size: 70%; font-weight: bolder;", class="wifiNetworkInputs"></li>
 
                                 <input type="submit" value="Connect" style="margin:5px; font-size: 70%; font-weight: bolder;", class="wifiConnectButton">
