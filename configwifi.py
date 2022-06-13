@@ -13,10 +13,11 @@ def create_wpa_supplicant(ssid, wifi_key):
     temp_conf_file.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n')
     temp_conf_file.write('update_config=1\n')
     temp_conf_file.write('\n')
-
+    
     # change to a new wifi
     temp_conf_file.write('network={\n')
     temp_conf_file.write('	ssid="' + ssid + '"\n')
+    # ssid is user's name
     if wifi_key == '':
         temp_conf_file.write('	key_mgmt=NONE\n')
     else:
