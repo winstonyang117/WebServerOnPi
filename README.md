@@ -56,9 +56,18 @@ Use the command below to copy all the files under "/var/www/html".
 ```
 git clone https://github.com/winstonyang117/WebServerOnPi.git
 ```
+Move all the files from **WebServerOnPi** to last path **"/var/www/html"**
+```
+sudo mv * ../
+```
+Then, you can delete the folder WebServerOnPi and index.html accordingly. 
+```
+sudo rm -r WebServerOnPi/
+sudo rm -r index.html 
+```
 Then you got everything you need. Next, we should make some important changes of file ownership.
 
-### Step 4: File ownership configuration
+### Step 4: File ownership configuration (if needed)
 For Linux files, r:4 w:2 x:1 and use "chmod" to change the file's mode. Use "chown" to change the file's ownership or add user for specific file. 
 1. Change mode of "wpa_supplicant.conf". 
 ```
