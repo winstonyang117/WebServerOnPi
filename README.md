@@ -1,5 +1,5 @@
 # Pi Dashboard
-A WebUI dashboard for raspberry pi.
+A WebUI dashboard for raspberry pi. It also include the multiple wifi connection features. It will first try to connect the wifi with your input "name" and "password". If it fails to be connected, it will automatically use back-up wifi "sensorweb" with "snesorweb128".
 
 Before building this dashboard, we will walk through serveral essential steps. 
 Generally, this dashboard was built based on Apache and PHP7. It also includes some Javascripts and Python codes.  
@@ -40,15 +40,71 @@ Next, we will install PHP 7.4 and several other packages to our Raspberry Pi. Th
 sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mbstring php7.4-mysql php7.4-curl php7.4-gd php7.4-zip -y
 ```
 
-Now that PHP7 is installed to our Raspberry Pi, we can add "submitwifi.php" to it, which will pass wifi ssid and password in the future.
+Now that PHP7 is installed to our Raspberry Pi, we can edit "example.php" to test it.
 ```
-sudo nano /var/www/html/submitwifi.php
+sudo nano /var/www/html/example.php
+```
+Add the lines beblow:
+```
+<?php
+echo "Today's date is ".date('Y-m-d H:i:s');
+```
+Then, control+x and Yes. Go to: http://192.168.xxx.xxx/example.php to verify if it works.
+
+### Step 3: Clone all the files from Github
+Use the command below to copy all the files under "/var/www/html". 
+```
+git clone https://github.com/winstonyang117/WebServerOnPi.git
+```
+Then you got everything you need. Next, we should make some important changes of file ownership.
+
+### Step 4: File ownership configuration
+For Linux files, r:4 w:2 x:1 and use "chmod" to change the file's mode. Use "chown" to change the file's ownership or add user for specific file. 
+1. Change mode of "wpa_supplicant.conf". 
+```
+sudo chmod 777 wpa_supplicant.conf
+```
+2. Give configwifi.py's ownership to Apache (www-data)
+```
+sudo chown www-data configwifi.py
+```
+3. Add current user (pi) to its owner.
+```
+sudo chown www-data:pi configwifi.py
+```
+4. Look for ownership: 
+```
+ls -al
 ```
 
+### Step 5: Make RPi IP address static
+1. To begin setting up a static IP address on our Raspberry Pi, we will first need to retrieve some information about our current network setup. Retrieve  the currently defined router for your network by running the following command.
+```
+ip r | grep default
+```
+Make a note of the first IP mentioned in this string.
 
+2. Next, let us also retrieve the current DNS server.
+```
+sudo nano /etc/resolv.conf
+```
+Make a note of the IP next to “nameserver“. This will define the name server in our next few steps.
 
+3. Now that we have retrieved both our current “router” IP and the nameserver IP we can proceed to modify the “dhcpcd.conf” configuration file by running the command below.
+```
+sudo nano /etc/dhcpcd.conf
+```
 
-
-
+4. First, you have to decide if you want to set the static IP for your “eth0” (Ethernet) connector or you “wlan0” (WiFi) connection. Decide which one you want and replace “<NETWORK>” with it.
+Make sure you replace “<STATICIP>” with the IP address that you want to assign to your Raspberry Pi. Make sure this is not an IP that could be easily attached to another device on your network.
+Replace “<ROUTERIP>” with the IP address that you retrieved in step 1 of this tutorial
+Finally, replace “<DNSIP>” with the IP of the domain name server you want to utilize. This address is either the IP you got in step 2 or another one such as Googles “8.8.8.8” or CloudFlare’s “1.1.1.1“.
+  
+```
+interface <NETWORK>
+static ip_address=<STATICIP>/24
+static routers=<ROUTERIP>
+static domain_name_servers=<DNSIP>
+```
 
 
