@@ -106,5 +106,5 @@ static ip_address=<STATICIP>/24
 static routers=<ROUTERIP>
 static domain_name_servers=<DNSIP>
 ```
-
+Do not forget to **REBOOT** your RPi.
 
