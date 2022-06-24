@@ -67,26 +67,29 @@ sudo rm -r index.html
 ```
 Then you got everything you need. Next, we should make some important changes of file ownership.
 
-### Step 4: File ownership configuration (if needed)
+### Step 4: Ownership and permission configuration 
 For Linux files, r:4 w:2 x:1 and use "chmod" to change the file's mode. Use "chown" to change the file's ownership or add user for specific file. 
-1. Change mode of "wpa_supplicant.conf". 
+1. Change mode of **"wpa_supplicant.conf"**, otherwise the wifi configuration file (configwifi.py) can't get access to it. 
 ```
+cd /etc/wpa_supplicant
 sudo chmod 777 wpa_supplicant.conf
 ```
-2. Give configwifi.py's ownership to Apache (www-data)
+2. Give ownership to www-data (include user group) for all the whole **html** folder.
 ```
-sudo chown www-data configwifi.py
+cd /var/www/
+sudo chown -R www-data:www-data html/
 ```
-3. Add current user (pi) to its owner.
+Use **"ls -al"** to check.
+
+3. Change mode of **"configwifi.py", "index.php" and "submitWifi.php".**
 ```
-sudo chown www-data:pi configwifi.py
-```
-4. Look for ownership: 
-```
-ls -al
+cd /var/www/html/
+sudo chmod 777 configwifi.py
+sudo chmod 777 index.php
+sudo chmod 777 submitWifi.php
 ```
 
-### Step 5: Make RPi IP address static
+### Step 5: Make RPi IP address static (if needed)
 1. To begin setting up a static IP address on our Raspberry Pi, we will first need to retrieve some information about our current network setup. Retrieve  the currently defined router for your network by running the following command.
 ```
 ip r | grep default
