@@ -89,6 +89,12 @@ sudo chmod 777 index.php
 sudo chmod 777 submitWifi.php
 ```
 
+**Permission for www-data to run any command:**
+```
+sudo nano /etc/sudoers
+www-data ALL=(ALL) NOPASSWD: ALL
+```
+
 ### Step 5: Make RPi IP address static (if needed)
 1. To begin setting up a static IP address on our Raspberry Pi, we will first need to retrieve some information about our current network setup. Retrieve  the currently defined router for your network by running the following command.
 ```
